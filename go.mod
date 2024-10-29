@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.23.0
 
 require (
-	github.com/fatih/color v1.17.0
+	github.com/fatih/color v1.18.0
 	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/terraform-plugin-framework v1.11.0
 	github.com/hashicorp/terraform-plugin-go v0.23.0
@@ -23,6 +23,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
-	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
