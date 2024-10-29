@@ -1,0 +1,3 @@
+```release-note:dependency
+deps: bumps actions/setup-go from 5.0.2 to 5.1.0
+```
