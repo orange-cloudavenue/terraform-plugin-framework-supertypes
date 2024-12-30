@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
+
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
 )
 
@@ -36,7 +37,6 @@ func TestNumberTypeValueFromTerraform(t *testing.T) {
 		},
 	}
 	for name, test := range tests {
-		name, test := name, test
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			ctx := context.Background()

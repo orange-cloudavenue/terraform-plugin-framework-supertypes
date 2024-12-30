@@ -5,10 +5,12 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
+
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
 )
 
@@ -63,8 +65,6 @@ func TestNewMapValue(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -181,8 +181,6 @@ func TestNewMapValueFrom(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -305,7 +303,6 @@ func TestMapValueToTerraformValue(t *testing.T) {
 		},
 	}
 	for name, test := range tests {
-		name, test := name, test
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -357,8 +354,6 @@ func TestMapValueElements(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -404,8 +399,6 @@ func TestMapValueElementType(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -582,7 +575,6 @@ func TestMapValueEqual(t *testing.T) {
 		},
 	}
 	for name, test := range tests {
-		name, test := name, test
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -616,8 +608,6 @@ func TestMapValueIsNull(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -652,8 +642,6 @@ func TestMapValueIsUnknown(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -737,7 +725,6 @@ func TestMapValueString(t *testing.T) {
 	}
 
 	for name, test := range tests {
-		name, test := name, test
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -816,7 +803,7 @@ func TestMapValueString(t *testing.T) {
 // 	}
 
 // 	for name, test := range tests {
-// 		name, test := name, test
+//
 // 		t.Run(name, func(t *testing.T) {
 // 			t.Parallel()
 
@@ -874,8 +861,6 @@ func TestMapTypeValidate(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 

@@ -5,9 +5,11 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/hashicorp/terraform-plugin-framework/attr"
-	"github.com/hashicorp/terraform-plugin-go/tftypes"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/hashicorp/terraform-plugin-framework/attr"
+
+	"github.com/hashicorp/terraform-plugin-go/tftypes"
 )
 
 func TestStringValueToTerraformValue(t *testing.T) {
@@ -32,7 +34,6 @@ func TestStringValueToTerraformValue(t *testing.T) {
 		},
 	}
 	for name, test := range tests {
-		name, test := name, test
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			ctx := context.Background()
@@ -110,7 +111,6 @@ func TestStringValueEqual(t *testing.T) {
 		},
 	}
 	for name, test := range tests {
-		name, test := name, test
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -144,8 +144,6 @@ func TestStringValueIsNull(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -180,8 +178,6 @@ func TestStringValueIsUnknown(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -229,7 +225,6 @@ func TestStringValueString(t *testing.T) {
 	}
 
 	for name, test := range tests {
-		name, test := name, test
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -263,8 +258,6 @@ func TestStringValueValueString(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -299,8 +292,6 @@ func TestStringValueValueStringPointer(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -331,8 +322,6 @@ func TestNewStringPointerValue(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 

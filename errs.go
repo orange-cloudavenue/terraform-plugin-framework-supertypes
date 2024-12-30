@@ -28,7 +28,7 @@ func MustDiag[T any](x T, diags diag.Diagnostics) T {
 	return Must(x, DiagnosticsError(diags))
 }
 
-// DiagnosticsError returns an error containing all Diagnostic with SeverityError
+// DiagnosticsError returns an error containing all Diagnostic with SeverityError.
 func DiagnosticsError(diags diag.Diagnostics) error {
 	var errs []error
 
@@ -40,7 +40,7 @@ func DiagnosticsError(diags diag.Diagnostics) error {
 }
 
 // DiagnosticString formats a Diagnostic
-// If there is no `Detail`, only prints summary, otherwise prints both
+// If there is no `Detail`, only prints summary, otherwise prints both.
 func DiagnosticString(d diag.Diagnostic) string {
 	if d.Detail() == "" {
 		return d.Summary()

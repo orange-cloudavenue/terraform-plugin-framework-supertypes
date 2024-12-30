@@ -5,8 +5,10 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+
 	supertypes "github.com/orange-cloudavenue/terraform-plugin-framework-supertypes"
 )
 
