@@ -8,6 +8,7 @@
 
 ### :dependabot: **Dependencies**
 
+* deps: bumps actions/checkout from 4.1.7 to 4.2.2 (GH-2)
 * deps: bumps github.com/hashicorp/terraform-plugin-go from 0.23.0 to 0.25.0 (GH-3)
 
 ## 0.4.0 (August 20, 2024)
