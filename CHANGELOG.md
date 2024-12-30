@@ -1,4 +1,7 @@
 ## 0.5.0 (Unreleased)
+### :rotating_light: **Breaking Changes**
+
+* `go` - Bump golang version from `1.21.0` to `1.22.0` (GH-7)
 ### :information_source: **Notes**
 
 * `core` - The `FrangipaneTeam/terraform-plugin-framework-supertypes`  has been renamed to `orange-cloudavenue/terraform-plugin-framework-supertypes`. The plugin has been moved to be under the `orange-cloudavenue` organization. (GH-5)
