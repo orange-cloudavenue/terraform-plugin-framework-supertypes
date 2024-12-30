@@ -1,4 +1,12 @@
 ## 0.5.0 (Unreleased)
+### :information_source: **Notes**
+
+* `core` - The `FrangipaneTeam/terraform-plugin-framework-supertypes`  has been renamed to `orange-cloudavenue/terraform-plugin-framework-supertypes`. The plugin has been moved to be under the `orange-cloudavenue` organization. (GH-5)
+
+### :dependabot: **Dependencies**
+
+* deps: bumps github.com/hashicorp/terraform-plugin-go from 0.23.0 to 0.25.0 (GH-3)
+
 ## 0.4.0 (August 20, 2024)
 ### :rotating_light: **Breaking Changes**
 
