@@ -55,7 +55,7 @@ func TestNumberTypeValueFromTerraform(t *testing.T) {
 				// expectations, we're good
 				return
 			}
-			if err == nil && test.expectedErr != "" {
+			if test.expectedErr != "" { // Implicit err == nil
 				t.Errorf("Expected error to be %q, didn't get an error", test.expectedErr)
 				return
 			}

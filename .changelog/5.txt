@@ -1,0 +1,3 @@
+```release-note:note
+`core` - The `FrangipaneTeam/terraform-plugin-framework-supertypes`  has been renamed to `orange-cloudavenue/terraform-plugin-framework-supertypes`. The plugin has been moved to be under the `orange-cloudavenue` organization.
+```
