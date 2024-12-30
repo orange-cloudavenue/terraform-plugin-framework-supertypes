@@ -1,4 +1,4 @@
-module github.com/FrangipaneTeam/terraform-plugin-framework-supertypes
+module github.com/orange-cloudavenue/terraform-plugin-framework-supertypes
 
 go 1.21
 

@@ -7,8 +7,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-
-	supertypes "github.com/FrangipaneTeam/terraform-plugin-framework-supertypes"
+	supertypes "github.com/orange-cloudavenue/terraform-plugin-framework-supertypes"
 )
 
 func TestAttributeTypes(t *testing.T) {
