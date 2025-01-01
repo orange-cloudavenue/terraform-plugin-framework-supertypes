@@ -2,6 +2,7 @@
 
 ### :dependabot: **Dependencies**
 
+* deps: bumps github.com/fatih/color from 1.17.0 to 1.18.0 (GH-10)
 * deps: bumps github.com/stretchr/testify from 1.9.0 to 1.10.0 (GH-11)
 
 ## 0.5.0 (December 30, 2024)
