@@ -67,3 +67,8 @@ jobs:
       tag: ${{ github.event.inputs.tag }}
     secrets:
       TOKEN: ${{ secrets.CHANGELOG_PAT }}
+  
+  publish-doc:
+    needs: [make-release]
+    name: "Publish Documentation"
+    uses: orange-cloudavenue/workflows/.github/workflows/doc_publish.yml@main
