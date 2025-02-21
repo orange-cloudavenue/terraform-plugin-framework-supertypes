@@ -3,6 +3,7 @@
 ### :dependabot: **Dependencies**
 
 * deps: bumps github.com/fatih/color from 1.17.0 to 1.18.0 (GH-10)
+* deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.13.0 to 1.14.1 (GH-28)
 * deps: bumps github.com/hashicorp/terraform-plugin-go from 0.25.0 to 0.26.0 (GH-23)
 * deps: bumps github.com/stretchr/testify from 1.9.0 to 1.10.0 (GH-11)
 
