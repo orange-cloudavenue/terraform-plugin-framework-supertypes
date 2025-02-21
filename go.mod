@@ -7,7 +7,7 @@ toolchain go1.23.1
 require (
 	github.com/fatih/color v1.18.0
 	github.com/google/go-cmp v0.6.0
-	github.com/hashicorp/terraform-plugin-framework v1.13.0
+	github.com/hashicorp/terraform-plugin-framework v1.14.1
 	github.com/hashicorp/terraform-plugin-go v0.26.0
 	github.com/iancoleman/strcase v0.3.0
 	github.com/stretchr/testify v1.10.0
