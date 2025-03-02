@@ -38,3 +38,5 @@ website/vendor
 # auto generated files by go generate
 *_type.go
 *_value.go
+
+dev/

@@ -108,6 +108,10 @@ func NewSingleNestedObjectValueOf[T any](ctx context.Context, t *T) SingleNested
 func (v SingleNestedObjectValueOf[T]) Get(ctx context.Context) (*T, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
+	if !v.IsKnown() {
+		return nil, diags
+	}
+
 	ptr := new(T)
 
 	diags.Append(v.ObjectValue.As(ctx, ptr, basetypes.ObjectAsOptions{})...)
