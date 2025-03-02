@@ -203,7 +203,7 @@ func decodeToStruct(ctx context.Context, rTfType reflect.Type, rTf reflect.Value
 	}
 
 	if rGo.Kind() == reflect.Ptr && rGo.IsNil() {
-		return nil
+		return fmt.Errorf("%T is nil", rGo.Interface())
 	}
 
 	if rTfType.Kind() == reflect.Ptr {
@@ -313,7 +313,7 @@ func decodeToStruct(ctx context.Context, rTfType reflect.Type, rTf reflect.Value
 					return false
 				}
 
-				// Detect if the object is not nil
+				// Detect if the object is addressable
 				if valTfField.IsValid() && valTfField.IsZero() {
 					break
 				}
