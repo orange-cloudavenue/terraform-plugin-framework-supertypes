@@ -24,6 +24,7 @@ The supertypes are custom types that are used to extend the functionality of the
 Custom types available in the supertypes:
 
 * `StringType` - A custom type that is used to define the string type.
+* `Int32Type` - A custom type that is used to define the integer type.
 * `Int64Type` - A custom type that is used to define the integer type.
 * `NumberType` - A custom type that is used to define the number type.
 * `BoolType` - A custom type that is used to define the boolean type.
@@ -59,16 +60,16 @@ Special functions available for the `Float64Type`:
 
 Special functions available for the `Int32Type` and `Int64Type`:
 
-* `SetInt()` - A function that is used to set `int` into the `int64`.
-* `SetInt8()` - A function that is used to set `int8` into the `int64`.
-* `SetInt16()` - A function that is used to set `int16` into the `int64`.
-* `SetInt32()` - A function that is used to set `int32` into the `int64`.
-* `SetInt64()` - A function that is used to set `int64` into the `int64`.
-* `SetIntPtr()` - A function that is used to set `int` pointer into the `int64`.
-* `SetInt8Ptr()` - A function that is used to set `int8` pointer into the `int64`.
-* `SetInt16Ptr()` - A function that is used to set `int16` pointer into the `int64`.
-* `SetInt32Ptr()` - A function that is used to set `int32` pointer into the `int64`.
-* `SetInt64Ptr()` - A function that is used to set `int64` pointer into the `int64`.
+* `SetInt()` - A function that is used to set `int` into the type (`int32` or `int64`).
+* `SetInt8()` - A function that is used to set `int8` into the type (`int32` or `int64`).
+* `SetInt16()` - A function that is used to set `int16` into the type (`int32` or `int64`).
+* `SetInt32()` - A function that is used to set `int32` into the type (`int32` or `int64`).
+* `SetInt64()` - A function that is used to set `int64` into the type (`int32` or `int64`).
+* `SetIntPtr()` - A function that is used to set `int` pointer into the type (`int32` or `int64`).
+* `SetInt8Ptr()` - A function that is used to set `int8` pointer into the type (`int32` or `int64`).
+* `SetInt16Ptr()` - A function that is used to set `int16` pointer into the type (`int32` or `int64`).
+* `SetInt32Ptr()` - A function that is used to set `int32` pointer into the type (`int32` or `int64`).
+* `SetInt64Ptr()` - A function that is used to set `int64` pointer into the type (`int32` or `int64`).
 * `GetInt()` - A function that is used to get the value as an `int`.
 * `GetInt8()` - A function that is used to get the value as an `int8`.
 * `GetInt16()` - A function that is used to get the value as an `int16`.
