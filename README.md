@@ -57,7 +57,7 @@ Special functions available for the `Float64Type`:
 * `GetFloat32Ptr()` - A function that is used to get the value as a `float32` pointer.
 * `GetFloat64Ptr()` - A function that is used to get the value as a `float64` pointer.
 
-Special functions available for the `Int64Type`:
+Special functions available for the `Int32Type` and `Int64Type`:
 
 * `SetInt()` - A function that is used to set `int` into the `int64`.
 * `SetInt8()` - A function that is used to set `int8` into the `int64`.
