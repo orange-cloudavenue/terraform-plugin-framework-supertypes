@@ -163,156 +163,48 @@ func setFloatValue[T floatValues](s T) float64 {
 }
 {{ end }}
 
-{{ if eq .TypeName "Int64" }}
-// SetInt sets the int64 value to the given int.
-func (v *Int64Value) SetInt(s int) {
-	v.Set(setIntValue(s))
+{{ if or (eq .TypeName "Int64") (eq .TypeName "Int32") }}
+
+{{ $listOfIntTypes := split "Int,Int8,Int16,Int32,Int64" "," }}
+{{ range $i, $e := $listOfIntTypes }}
+
+// * {{$e}} type
+
+// Set{{$e}} sets the {{ golangType $.TypeName }} value to the given {{ golangType $e }}.
+func (v *{{ $.TypeName }}Value) Set{{$e}}(s {{ golangType $e }}) {
+	v.Set(set{{ $.TypeName }}Value(s))
 }
 
-// SetInt8 sets the int64 value to the given int8.
-func (v *Int64Value) SetInt8(s int8) {
-	v.Set(setIntValue(s))
-}
-
-// SetInt16 sets the int64 value to the given int16.
-func (v *Int64Value) SetInt16(s int16) {
-	v.Set(setIntValue(s))
-}
-
-// SetInt32 Sets the int64 value to the given int32.
-func (v *Int64Value) SetInt32(s int32) {
-	v.Set(setIntValue(s))
-}
-
-// SetInt64 sets the int64 value to the given int64. This is a same func as Set.
-func (v *Int64Value) SetInt64(s int64) {
-	v.Set(s)
-}
-
-// SetIntPtr sets the int64 value to the given int pointer. If the pointer is nil, the value is set to null.
-func (v *Int64Value) SetIntPtr(s *int) {
+// Set{{$e}}Ptr sets the {{ golangType $.TypeName }} value to the given {{ golangType $e }} pointer. If the pointer is nil, the value is set to null.
+func (v *{{$.TypeName}}Value) Set{{$e}}Ptr(s *{{ golangType $e }}) {
 	if s == nil {
-		v.Int64Value = basetypes.NewInt64Null()
+		v.{{$.TypeName}}Value = basetypes.New{{$.TypeName}}Null()
 		return
 	}
-	v.Int64Value = basetypes.NewInt64Value(setIntValue(*s))
+	v.{{$.TypeName}}Value = basetypes.New{{$.TypeName}}Value(set{{$.TypeName}}Value(*s))
 }
 
-// SetInt8Ptr sets the int64 value to the given int8 pointer. If the pointer is nil, the value is set to null.
-func (v *Int64Value) SetInt8Ptr(s *int8) {
-	if s == nil {
-		v.Int64Value = basetypes.NewInt64Null()
-		return
-	}
-	v.Int64Value = basetypes.NewInt64Value(setIntValue(*s))
+// Get{{$e}} returns converted {{ golangType $.TypeName }} to {{ golangType $e }} value.
+func (v {{$.TypeName}}Value) Get{{$e}}() {{ golangType $e }} {
+	return {{ golangType $e }}(v.Get())
 }
 
-// SetInt16Ptr sets the int64 value to the given int16 pointer. If the pointer is nil, the value is set to null.
-func (v *Int64Value) SetInt16Ptr(s *int16) {
-	if s == nil {
-		v.Int64Value = basetypes.NewInt64Null()
-		return
-	}
-	v.Int64Value = basetypes.NewInt64Value(setIntValue(*s))
-}
-
-// SetInt32Ptr sets the int64 value to the given int32 pointer. If the pointer is nil, the value is set to null.
-func (v *Int64Value) SetInt32Ptr(s *int32) {
-	if s == nil {
-		v.Int64Value = basetypes.NewInt64Null()
-		return
-	}
-	v.Int64Value = basetypes.NewInt64Value(setIntValue(*s))
-}
-
-// SetInt64Ptr sets the int64 value to the given int64 pointer.
-func (v *Int64Value) SetInt64Ptr(s *int64) {
-	v.SetPtr(s)
-}
-
-// GetInt returns converted int64 to int value.
-func (v Int64Value) GetInt() int {
-	return int(v.Get())
-}
-
-// GetInt8 return converted int64 to int8 value.
-func (v Int64Value) GetInt8() int8 {
-	return int8(v.Get())
-}
-
-// GetInt16 return converted int64 to int16 value.
-func (v Int64Value) GetInt16() int16 {
-	return int16(v.Get())
-}
-
-// GetInt32 returns converted int64 to int32 value.
-func (v Int64Value) GetInt32() int32 {
-	return int32(v.Get())
-}
-
-// GetInt64 returns int64 value. This is a same func as Get.
-func (v Int64Value) GetInt64() int64 {
-	return v.Get()
-}
-
-// GetIntPtr returns a converted int64 to int pointer. If the value is null or unknown, nil is returned.
-func (v Int64Value) GetIntPtr() *int {
+// Get{{$e}}Ptr returns a converted {{ golangType $.TypeName }} to {{ golangType $e }} pointer. If the value is null or unknown, nil is returned.
+func (v {{$.TypeName}}Value) Get{{$e}}Ptr() *{{ golangType $e }} {
 	if v.IsKnown() {
-		i := int(v.Get())
+		i := {{ golangType $e }}(v.Get())
 		return &i
 	}
 
 	return nil
 }
 
-// GetInt8Ptr returns a converted int64 to int8 pointer. If the value is null or unknown, nil is returned.
-func (v Int64Value) GetInt8Ptr() *int8 {
-	if v.IsKnown() {
-		i := int8(v.Get())
-		return &i
-	}
+{{ end }}
 
-	return nil
+
+func set{{ .TypeName }}Value[T intValues](s T) {{ golangType .TypeName }} {
+	return {{ golangType .TypeName }}(s)
 }
-
-// GetInt16Ptr returns a converted int64 to int16 pointer. If the value is null or unknown, nil is returned.
-func (v Int64Value) GetInt16Ptr() *int16 {
-	if v.IsKnown() {
-		i := int16(v.Get())
-		return &i
-	}
-
-	return nil
-}
-
-// GetInt32Ptr returns a converted int64 to int32 pointer. If the value is null or unknown, nil is returned.
-func (v Int64Value) GetInt32Ptr() *int32 {
-	if v.IsKnown() {
-		i := int32(v.Get())
-		return &i
-	}
-
-	return nil
-}
-
-// GetInt64Ptr returns a pointer to the underlying int64 value.
-func (v Int64Value) GetInt64Ptr() *int64 {
-	if v.IsKnown() {
-		i := v.Get()
-		return &i
-	}
-
-	return nil
-}
-
-type intValues interface {
-	int | int8 | int16 | int32 | int64
-}
-
-func setIntValue[T intValues](s T) int64 {
-	return int64(s)
-}
-
 
 {{ end }}
 

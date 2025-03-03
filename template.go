@@ -1,3 +1,5 @@
+//go:build ignore
+
 /*
  * SPDX-FileCopyrightText: Copyright (c) 2025 Orange
  * SPDX-License-Identifier: Mozilla Public License 2.0
@@ -6,8 +8,6 @@
  * the text of which is available at https://www.mozilla.org/en-US/MPL/2.0/
  * or see the "LICENSE" file for more details.
  */
-
-//go:build ignore
 
 // go generate
 package main
@@ -123,7 +123,7 @@ var (
 		},
 	}
 	terraformTypesMap = map[typeOfResource][]string{
-		simpleType:       {"string", "bool", "float64", "int64", "number"},
+		simpleType:       {"string", "bool", "float64", "int32", "int64", "number"},
 		arrayType:        {"list", "set", "map"},
 		nestedType:       {"list_nested", "set_nested", "map_nested"},
 		objectType:       {"object"},
@@ -199,6 +199,14 @@ var templateFuncs = template.FuncMap{
 			return "bool"
 		case "float64":
 			return "float64"
+		case "int":
+			return "int"
+		case "int8":
+			return "int8"
+		case "int16":
+			return "int16"
+		case "int32":
+			return "int32"
 		case "int64":
 			return "int64"
 		case "number":
@@ -216,6 +224,9 @@ var templateFuncs = template.FuncMap{
 		default:
 			return ""
 		}
+	},
+	"split": func(s string, sep string) []string {
+		return strings.Split(s, sep)
 	},
 }
 

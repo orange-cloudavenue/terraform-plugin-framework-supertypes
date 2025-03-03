@@ -94,29 +94,11 @@ func (v *Int64Value) SetPtr(s *int64) {
 	v.Int64Value = basetypes.NewInt64PointerValue(s)
 }
 
+// * Int type
+
 // SetInt sets the int64 value to the given int.
 func (v *Int64Value) SetInt(s int) {
-	v.Set(setIntValue(s))
-}
-
-// SetInt8 sets the int64 value to the given int8.
-func (v *Int64Value) SetInt8(s int8) {
-	v.Set(setIntValue(s))
-}
-
-// SetInt16 sets the int64 value to the given int16.
-func (v *Int64Value) SetInt16(s int16) {
-	v.Set(setIntValue(s))
-}
-
-// SetInt32 Sets the int64 value to the given int32.
-func (v *Int64Value) SetInt32(s int32) {
-	v.Set(setIntValue(s))
-}
-
-// SetInt64 sets the int64 value to the given int64. This is a same func as Set.
-func (v *Int64Value) SetInt64(s int64) {
-	v.Set(s)
+	v.Set(setInt64Value(s))
 }
 
 // SetIntPtr sets the int64 value to the given int pointer. If the pointer is nil, the value is set to null.
@@ -125,64 +107,12 @@ func (v *Int64Value) SetIntPtr(s *int) {
 		v.Int64Value = basetypes.NewInt64Null()
 		return
 	}
-	v.Int64Value = basetypes.NewInt64Value(setIntValue(*s))
-}
-
-// SetInt8Ptr sets the int64 value to the given int8 pointer. If the pointer is nil, the value is set to null.
-func (v *Int64Value) SetInt8Ptr(s *int8) {
-	if s == nil {
-		v.Int64Value = basetypes.NewInt64Null()
-		return
-	}
-	v.Int64Value = basetypes.NewInt64Value(setIntValue(*s))
-}
-
-// SetInt16Ptr sets the int64 value to the given int16 pointer. If the pointer is nil, the value is set to null.
-func (v *Int64Value) SetInt16Ptr(s *int16) {
-	if s == nil {
-		v.Int64Value = basetypes.NewInt64Null()
-		return
-	}
-	v.Int64Value = basetypes.NewInt64Value(setIntValue(*s))
-}
-
-// SetInt32Ptr sets the int64 value to the given int32 pointer. If the pointer is nil, the value is set to null.
-func (v *Int64Value) SetInt32Ptr(s *int32) {
-	if s == nil {
-		v.Int64Value = basetypes.NewInt64Null()
-		return
-	}
-	v.Int64Value = basetypes.NewInt64Value(setIntValue(*s))
-}
-
-// SetInt64Ptr sets the int64 value to the given int64 pointer.
-func (v *Int64Value) SetInt64Ptr(s *int64) {
-	v.SetPtr(s)
+	v.Int64Value = basetypes.NewInt64Value(setInt64Value(*s))
 }
 
 // GetInt returns converted int64 to int value.
 func (v Int64Value) GetInt() int {
 	return int(v.Get())
-}
-
-// GetInt8 return converted int64 to int8 value.
-func (v Int64Value) GetInt8() int8 {
-	return int8(v.Get())
-}
-
-// GetInt16 return converted int64 to int16 value.
-func (v Int64Value) GetInt16() int16 {
-	return int16(v.Get())
-}
-
-// GetInt32 returns converted int64 to int32 value.
-func (v Int64Value) GetInt32() int32 {
-	return int32(v.Get())
-}
-
-// GetInt64 returns int64 value. This is a same func as Get.
-func (v Int64Value) GetInt64() int64 {
-	return v.Get()
 }
 
 // GetIntPtr returns a converted int64 to int pointer. If the value is null or unknown, nil is returned.
@@ -195,6 +125,27 @@ func (v Int64Value) GetIntPtr() *int {
 	return nil
 }
 
+// * Int8 type
+
+// SetInt8 sets the int64 value to the given int8.
+func (v *Int64Value) SetInt8(s int8) {
+	v.Set(setInt64Value(s))
+}
+
+// SetInt8Ptr sets the int64 value to the given int8 pointer. If the pointer is nil, the value is set to null.
+func (v *Int64Value) SetInt8Ptr(s *int8) {
+	if s == nil {
+		v.Int64Value = basetypes.NewInt64Null()
+		return
+	}
+	v.Int64Value = basetypes.NewInt64Value(setInt64Value(*s))
+}
+
+// GetInt8 returns converted int64 to int8 value.
+func (v Int64Value) GetInt8() int8 {
+	return int8(v.Get())
+}
+
 // GetInt8Ptr returns a converted int64 to int8 pointer. If the value is null or unknown, nil is returned.
 func (v Int64Value) GetInt8Ptr() *int8 {
 	if v.IsKnown() {
@@ -203,6 +154,27 @@ func (v Int64Value) GetInt8Ptr() *int8 {
 	}
 
 	return nil
+}
+
+// * Int16 type
+
+// SetInt16 sets the int64 value to the given int16.
+func (v *Int64Value) SetInt16(s int16) {
+	v.Set(setInt64Value(s))
+}
+
+// SetInt16Ptr sets the int64 value to the given int16 pointer. If the pointer is nil, the value is set to null.
+func (v *Int64Value) SetInt16Ptr(s *int16) {
+	if s == nil {
+		v.Int64Value = basetypes.NewInt64Null()
+		return
+	}
+	v.Int64Value = basetypes.NewInt64Value(setInt64Value(*s))
+}
+
+// GetInt16 returns converted int64 to int16 value.
+func (v Int64Value) GetInt16() int16 {
+	return int16(v.Get())
 }
 
 // GetInt16Ptr returns a converted int64 to int16 pointer. If the value is null or unknown, nil is returned.
@@ -215,6 +187,27 @@ func (v Int64Value) GetInt16Ptr() *int16 {
 	return nil
 }
 
+// * Int32 type
+
+// SetInt32 sets the int64 value to the given int32.
+func (v *Int64Value) SetInt32(s int32) {
+	v.Set(setInt64Value(s))
+}
+
+// SetInt32Ptr sets the int64 value to the given int32 pointer. If the pointer is nil, the value is set to null.
+func (v *Int64Value) SetInt32Ptr(s *int32) {
+	if s == nil {
+		v.Int64Value = basetypes.NewInt64Null()
+		return
+	}
+	v.Int64Value = basetypes.NewInt64Value(setInt64Value(*s))
+}
+
+// GetInt32 returns converted int64 to int32 value.
+func (v Int64Value) GetInt32() int32 {
+	return int32(v.Get())
+}
+
 // GetInt32Ptr returns a converted int64 to int32 pointer. If the value is null or unknown, nil is returned.
 func (v Int64Value) GetInt32Ptr() *int32 {
 	if v.IsKnown() {
@@ -225,21 +218,38 @@ func (v Int64Value) GetInt32Ptr() *int32 {
 	return nil
 }
 
-// GetInt64Ptr returns a pointer to the underlying int64 value.
+// * Int64 type
+
+// SetInt64 sets the int64 value to the given int64.
+func (v *Int64Value) SetInt64(s int64) {
+	v.Set(setInt64Value(s))
+}
+
+// SetInt64Ptr sets the int64 value to the given int64 pointer. If the pointer is nil, the value is set to null.
+func (v *Int64Value) SetInt64Ptr(s *int64) {
+	if s == nil {
+		v.Int64Value = basetypes.NewInt64Null()
+		return
+	}
+	v.Int64Value = basetypes.NewInt64Value(setInt64Value(*s))
+}
+
+// GetInt64 returns converted int64 to int64 value.
+func (v Int64Value) GetInt64() int64 {
+	return int64(v.Get())
+}
+
+// GetInt64Ptr returns a converted int64 to int64 pointer. If the value is null or unknown, nil is returned.
 func (v Int64Value) GetInt64Ptr() *int64 {
 	if v.IsKnown() {
-		i := v.Get()
+		i := int64(v.Get())
 		return &i
 	}
 
 	return nil
 }
 
-type intValues interface {
-	int | int8 | int16 | int32 | int64
-}
-
-func setIntValue[T intValues](s T) int64 {
+func setInt64Value[T intValues](s T) int64 {
 	return int64(s)
 }
 

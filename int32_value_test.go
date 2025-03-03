@@ -23,24 +23,24 @@ import (
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
 )
 
-func TestInt64ValueToTerraformValue(t *testing.T) {
+func TestInt32ValueToTerraformValue(t *testing.T) {
 	t.Parallel()
 
 	type testCase struct {
-		input       Int64Value
+		input       Int32Value
 		expectation interface{}
 	}
 	tests := map[string]testCase{
 		"known": {
-			input:       NewInt64Value(123),
+			input:       NewInt32Value(123),
 			expectation: tftypes.NewValue(tftypes.Number, big.NewFloat(123)),
 		},
 		"unknown": {
-			input:       NewInt64Unknown(),
+			input:       NewInt32Unknown(),
 			expectation: tftypes.NewValue(tftypes.Number, tftypes.UnknownValue),
 		},
 		"null": {
-			input:       NewInt64Null(),
+			input:       NewInt32Null(),
 			expectation: tftypes.NewValue(tftypes.Number, nil),
 		},
 	}
@@ -61,67 +61,67 @@ func TestInt64ValueToTerraformValue(t *testing.T) {
 	}
 }
 
-func TestInt64ValueEqual(t *testing.T) {
+func TestInt32ValueEqual(t *testing.T) {
 	t.Parallel()
 
 	type testCase struct {
-		input       Int64Value
+		input       Int32Value
 		candidate   attr.Value
 		expectation bool
 	}
 	tests := map[string]testCase{
 		"known-known-same": {
-			input:       NewInt64Value(123),
-			candidate:   NewInt64Value(123),
+			input:       NewInt32Value(123),
+			candidate:   NewInt32Value(123),
 			expectation: true,
 		},
 		"known-known-diff": {
-			input:       NewInt64Value(123),
-			candidate:   NewInt64Value(456),
+			input:       NewInt32Value(123),
+			candidate:   NewInt32Value(456),
 			expectation: false,
 		},
 		"known-unknown": {
-			input:       NewInt64Value(123),
-			candidate:   NewInt64Unknown(),
+			input:       NewInt32Value(123),
+			candidate:   NewInt32Unknown(),
 			expectation: false,
 		},
 		"known-null": {
-			input:       NewInt64Value(123),
-			candidate:   NewInt64Null(),
+			input:       NewInt32Value(123),
+			candidate:   NewInt32Null(),
 			expectation: false,
 		},
 		"unknown-value": {
-			input:       NewInt64Unknown(),
-			candidate:   NewInt64Value(123),
+			input:       NewInt32Unknown(),
+			candidate:   NewInt32Value(123),
 			expectation: false,
 		},
 		"unknown-unknown": {
-			input:       NewInt64Unknown(),
-			candidate:   NewInt64Unknown(),
+			input:       NewInt32Unknown(),
+			candidate:   NewInt32Unknown(),
 			expectation: true,
 		},
 		"unknown-null": {
-			input:       NewInt64Unknown(),
-			candidate:   NewInt64Null(),
+			input:       NewInt32Unknown(),
+			candidate:   NewInt32Null(),
 			expectation: false,
 		},
 		"null-known": {
-			input:       NewInt64Null(),
-			candidate:   NewInt64Value(123),
+			input:       NewInt32Null(),
+			candidate:   NewInt32Value(123),
 			expectation: false,
 		},
 		"null-unknown": {
-			input:       NewInt64Null(),
-			candidate:   NewInt64Unknown(),
+			input:       NewInt32Null(),
+			candidate:   NewInt32Unknown(),
 			expectation: false,
 		},
 		"null-null": {
-			input:       NewInt64Null(),
-			candidate:   NewInt64Null(),
+			input:       NewInt32Null(),
+			candidate:   NewInt32Null(),
 			expectation: true,
 		},
-		"not-int64-type": {
-			input:       NewInt64Null(),
+		"not-int32-type": {
+			input:       NewInt32Value(123),
 			candidate:   NewStringValue("123"),
 			expectation: false,
 		},
@@ -138,23 +138,23 @@ func TestInt64ValueEqual(t *testing.T) {
 	}
 }
 
-func TestInt64ValueIsNull(t *testing.T) {
+func TestInt32ValueIsNull(t *testing.T) {
 	t.Parallel()
 
 	testCases := map[string]struct {
-		input    Int64Value
+		input    Int32Value
 		expected bool
 	}{
 		"known": {
-			input:    NewInt64Value(24),
+			input:    NewInt32Value(24),
 			expected: false,
 		},
 		"null": {
-			input:    NewInt64Null(),
+			input:    NewInt32Null(),
 			expected: true,
 		},
 		"unknown": {
-			input:    NewInt64Unknown(),
+			input:    NewInt32Unknown(),
 			expected: false,
 		},
 	}
@@ -172,23 +172,23 @@ func TestInt64ValueIsNull(t *testing.T) {
 	}
 }
 
-func TestInt64ValueIsUnknown(t *testing.T) {
+func TestInt32ValueIsUnknown(t *testing.T) {
 	t.Parallel()
 
 	testCases := map[string]struct {
-		input    Int64Value
+		input    Int32Value
 		expected bool
 	}{
 		"known": {
-			input:    NewInt64Value(24),
+			input:    NewInt32Value(24),
 			expected: false,
 		},
 		"null": {
-			input:    NewInt64Null(),
+			input:    NewInt32Null(),
 			expected: false,
 		},
 		"unknown": {
-			input:    NewInt64Unknown(),
+			input:    NewInt32Unknown(),
 			expected: true,
 		},
 	}
@@ -206,40 +206,40 @@ func TestInt64ValueIsUnknown(t *testing.T) {
 	}
 }
 
-func TestInt64ValueString(t *testing.T) {
+func TestInt32ValueString(t *testing.T) {
 	t.Parallel()
 
 	type testCase struct {
-		input       Int64Value
+		input       Int32Value
 		expectation string
 	}
 	tests := map[string]testCase{
 		"known-less-than-one": {
-			input:       NewInt64Value(-12340984302980000),
-			expectation: "-12340984302980000",
+			input:       NewInt32Value(-1234098430),
+			expectation: "-1234098430",
 		},
 		"known-more-than-one": {
-			input:       NewInt64Value(92387938173219327),
-			expectation: "92387938173219327",
+			input:       NewInt32Value(923879381),
+			expectation: "923879381",
 		},
-		"known-min-int64": {
-			input:       NewInt64Value(math.MinInt64),
-			expectation: "-9223372036854775808",
+		"known-min-int32": {
+			input:       NewInt32Value(math.MinInt32),
+			expectation: "-2147483648",
 		},
-		"known-max-int64": {
-			input:       NewInt64Value(math.MaxInt64),
-			expectation: "9223372036854775807",
+		"known-max-int32": {
+			input:       NewInt32Value(math.MaxInt32),
+			expectation: "2147483647",
 		},
 		"unknown": {
-			input:       NewInt64Unknown(),
+			input:       NewInt32Unknown(),
 			expectation: "<unknown>",
 		},
 		"null": {
-			input:       NewInt64Null(),
+			input:       NewInt32Null(),
 			expectation: "<null>",
 		},
 		"zero-value": {
-			input:       Int64Value{},
+			input:       Int32Value{},
 			expectation: "<null>",
 		},
 	}
@@ -256,23 +256,23 @@ func TestInt64ValueString(t *testing.T) {
 	}
 }
 
-func TestInt64ValueValueInt64(t *testing.T) {
+func TestInt32ValueValueInt32(t *testing.T) {
 	t.Parallel()
 
 	testCases := map[string]struct {
-		input    Int64Value
-		expected int64
+		input    Int32Value
+		expected int32
 	}{
 		"known": {
-			input:    NewInt64Value(24),
+			input:    NewInt32Value(24),
 			expected: 24,
 		},
 		"null": {
-			input:    NewInt64Null(),
+			input:    NewInt32Null(),
 			expected: 0,
 		},
 		"unknown": {
-			input:    NewInt64Unknown(),
+			input:    NewInt32Unknown(),
 			expected: 0,
 		},
 	}
@@ -281,7 +281,7 @@ func TestInt64ValueValueInt64(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
-			got := testCase.input.ValueInt64()
+			got := testCase.input.ValueInt32()
 
 			if diff := cmp.Diff(got, testCase.expected); diff != "" {
 				t.Errorf("unexpected difference: %s", diff)
@@ -290,24 +290,24 @@ func TestInt64ValueValueInt64(t *testing.T) {
 	}
 }
 
-func TestInt64ValueValueInt64Pointer(t *testing.T) {
+func TestInt32ValueValueInt32Pointer(t *testing.T) {
 	t.Parallel()
 
 	testCases := map[string]struct {
-		input    Int64Value
-		expected *int64
+		input    Int32Value
+		expected *int32
 	}{
 		"known": {
-			input:    NewInt64Value(24),
-			expected: pointer(int64(24)),
+			input:    NewInt32Value(24),
+			expected: pointer(int32(24)),
 		},
 		"null": {
-			input:    NewInt64Null(),
+			input:    NewInt32Null(),
 			expected: nil,
 		},
 		"unknown": {
-			input:    NewInt64Unknown(),
-			expected: pointer(int64(0)),
+			input:    NewInt32Unknown(),
+			expected: pointer(int32(0)),
 		},
 	}
 
@@ -315,7 +315,7 @@ func TestInt64ValueValueInt64Pointer(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
-			got := testCase.input.ValueInt64Pointer()
+			got := testCase.input.ValueInt32Pointer()
 
 			if diff := cmp.Diff(got, testCase.expected); diff != "" {
 				t.Errorf("unexpected difference: %s", diff)
@@ -324,20 +324,20 @@ func TestInt64ValueValueInt64Pointer(t *testing.T) {
 	}
 }
 
-func TestNewInt64PointerValue(t *testing.T) {
+func TestNewInt32PointerValue(t *testing.T) {
 	t.Parallel()
 
 	testCases := map[string]struct {
-		value    *int64
-		expected Int64Value
+		value    *int32
+		expected Int32Value
 	}{
 		"nil": {
 			value:    nil,
-			expected: NewInt64Null(),
+			expected: NewInt32Null(),
 		},
 		"value": {
-			value:    pointer(int64(123)),
-			expected: NewInt64Value(123),
+			value:    pointer(int32(123)),
+			expected: NewInt32Value(123),
 		},
 	}
 
@@ -345,7 +345,7 @@ func TestNewInt64PointerValue(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
-			got := NewInt64PointerValue(testCase.value)
+			got := NewInt32PointerValue(testCase.value)
 
 			if diff := cmp.Diff(got, testCase.expected); diff != "" {
 				t.Errorf("unexpected difference: %s", diff)
@@ -354,42 +354,42 @@ func TestNewInt64PointerValue(t *testing.T) {
 	}
 }
 
-func TestInt64Value(t *testing.T) {
-	// Test NewInt64Null
-	v := NewInt64Null()
+func TestInt32Value(t *testing.T) {
+	// Test NewInt32Null
+	v := NewInt32Null()
 	assert.True(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.False(t, v.IsKnown())
-	assert.Equal(t, int64(0), v.Get())
+	assert.Equal(t, int32(0), v.Get())
 
-	// Test NewInt64Unknown
-	v = NewInt64Unknown()
+	// Test NewInt32Unknown
+	v = NewInt32Unknown()
 	assert.False(t, v.IsNull())
 	assert.True(t, v.IsUnknown())
 	assert.False(t, v.IsKnown())
-	assert.Equal(t, int64(0), v.Get())
+	assert.Equal(t, int32(0), v.Get())
 
-	// Test NewInt64Value
-	v = NewInt64Value(42)
+	// Test NewInt32Value
+	v = NewInt32Value(42)
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(42), v.Get())
+	assert.Equal(t, int32(42), v.Get())
 
-	// Test NewInt64PointerValue
-	i := int64(42)
-	v = NewInt64PointerValue(&i)
+	// Test NewInt32PointerValue
+	i := int32(42)
+	v = NewInt32PointerValue(&i)
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(42), v.Get())
+	assert.Equal(t, int32(42), v.Get())
 
 	// Test Set
 	v.Set(84)
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(84), v.Get())
+	assert.Equal(t, int32(84), v.Get())
 
 	// Test SetPtr
 	i = 168
@@ -397,35 +397,35 @@ func TestInt64Value(t *testing.T) {
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(168), v.Get())
+	assert.Equal(t, int32(168), v.Get())
 
 	// Test SetInt
 	v.SetInt(42)
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(42), v.Get())
+	assert.Equal(t, int32(42), v.Get())
 
 	// Test SetInt8
 	v.SetInt8(8)
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(8), v.Get())
+	assert.Equal(t, int32(8), v.Get())
 
 	// Test SetInt16
 	v.SetInt16(16)
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(16), v.Get())
+	assert.Equal(t, int32(16), v.Get())
 
 	// Test SetInt32
 	v.SetInt32(32)
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(32), v.Get())
+	assert.Equal(t, int32(32), v.Get())
 
 	// Test SetInt64
 	v.SetInt64(64)
@@ -440,7 +440,7 @@ func TestInt64Value(t *testing.T) {
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(128), v.Get())
+	assert.Equal(t, int32(128), v.Get())
 	assert.NotNil(t, v.GetIntPtr())
 
 	// Test SetInt8Ptr
@@ -449,7 +449,7 @@ func TestInt64Value(t *testing.T) {
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(8), v.Get())
+	assert.Equal(t, int32(8), v.Get())
 	assert.NotNil(t, v.GetInt8Ptr())
 
 	// Test SetInt16Ptr
@@ -458,7 +458,7 @@ func TestInt64Value(t *testing.T) {
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(16), v.Get())
+	assert.Equal(t, int32(16), v.Get())
 	assert.NotNil(t, v.GetInt16Ptr())
 
 	// Test SetInt32Ptr
@@ -467,7 +467,7 @@ func TestInt64Value(t *testing.T) {
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(32), v.Get())
+	assert.Equal(t, int32(32), v.Get())
 	assert.NotNil(t, v.GetInt32Ptr())
 
 	// Test SetInt64Ptr
@@ -476,13 +476,13 @@ func TestInt64Value(t *testing.T) {
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(64), v.Get())
+	assert.Equal(t, int32(64), v.Get())
 	assert.NotNil(t, v.GetInt64Ptr())
 
 	// Test GetPtr
 	iPtr := v.GetPtr()
 	assert.NotNil(t, iPtr)
-	assert.Equal(t, int64(64), *iPtr)
+	assert.Equal(t, int32(64), *iPtr)
 
 	// Test GetInt
 	assert.Equal(t, 64, v.GetInt())
@@ -579,19 +579,19 @@ func TestInt64Value(t *testing.T) {
 	assert.True(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.False(t, v.IsKnown())
-	assert.Equal(t, int64(0), v.Get())
+	assert.Equal(t, int32(0), v.Get())
 
 	// Test SetUnknown
 	v.SetUnknown()
 	assert.False(t, v.IsNull())
 	assert.True(t, v.IsUnknown())
 	assert.False(t, v.IsKnown())
-	assert.Equal(t, int64(0), v.Get())
+	assert.Equal(t, int32(0), v.Get())
 
 	// Test Equal
-	v1 := NewInt64Value(42)
-	v2 := NewInt64Value(42)
-	v3 := NewInt64Value(84)
+	v1 := NewInt32Value(42)
+	v2 := NewInt32Value(42)
+	v3 := NewInt32Value(84)
 	assert.True(t, v1.Equal(v2))
 	assert.False(t, v1.Equal(v3))
 }
