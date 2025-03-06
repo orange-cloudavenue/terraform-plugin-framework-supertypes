@@ -2,6 +2,10 @@
 
 ### :rocket: **New Features**
 
+* Add new function for string type `NewStringValueOrNull` to create values or nullable values. (GH-36)
+* Add new functions for simple type `NewBoolPointerValueOrNull`, `NewStringPointerValueOrNull`, `NewInt64PointerValueOrNull`, `NewInt32PointerValueOrNull`, `NewFloat64PointerValueOrNull`, `NewBoolPointerValueOrNull` and `NewStringPointerValueOrNull` to create values or nullable pointer values. (GH-36)
+* Add new methods for `ValueOf` types to get/set values and append diags if the conversion fails. (`DiagsGet`, `DiagsSet`) (GH-36)
+* Add new methods for `ValueOf` types to get/set values and return panic if the conversion fails. (`MustGet`, `MustSet`) (GH-36)
 * `int32` - Support new `int32` type with some custom functions. (GetInt/8/16/32/64, GetInt/8/16/32/64Ptr, SetInt/8/16/32/64, SetInt/8/16/32/64Ptr) (GH-32)
 
 ### :dependabot: **Dependencies**
