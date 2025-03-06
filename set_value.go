@@ -143,6 +143,30 @@ func (v SetValueOf[T]) Get(ctx context.Context) (values []T, diags diag.Diagnost
 	return
 }
 
+// MustGet returns a SetValueOf from the given value.
+// It panics if set conversion fails.
+func (v SetValueOf[T]) MustGet(ctx context.Context) []T {
+	return MustDiag(v.Get(ctx))
+}
+
+// DiagsGet returns a SetValueOf from the given value.
+// It appends diags if set conversion fails.
+func (v SetValueOf[T]) DiagsGet(ctx context.Context, diags diag.Diagnostics) (values []T) {
+	vv, d := v.Get(ctx)
+	diags.Append(d...)
+	return vv
+}
+
+// MustSet sets the value of this value.
+func (v *SetValueOf[T]) MustSet(ctx context.Context, elements []T) {
+	MustDiags(v.Set(ctx, elements))
+}
+
+// DiagsSet sets the value of this value.
+func (v *SetValueOf[T]) DiagsSet(ctx context.Context, diags diag.Diagnostics, elements []T) {
+	diags.Append(v.Set(ctx, elements)...)
+}
+
 // Set sets the value of this value.
 func (v *SetValueOf[T]) Set(ctx context.Context, elements []T) diag.Diagnostics {
 	var d diag.Diagnostics

@@ -1,0 +1,15 @@
+```release-note:feature
+Add new functions for simple type `NewBoolPointerValueOrNull`, `NewStringPointerValueOrNull`, `NewInt64PointerValueOrNull`, `NewInt32PointerValueOrNull`, `NewFloat64PointerValueOrNull`, `NewBoolPointerValueOrNull` and `NewStringPointerValueOrNull` to create values or nullable pointer values.
+```
+
+```release-note:feature
+Add new function for string type `NewStringValueOrNull` to create values or nullable values.
+```
+
+```release-note:feature
+Add new methods for `ValueOf` types to get/set values and return panic if the conversion fails. (`MustGet`, `MustSet`)
+```
+
+```release-note:feature
+Add new methods for `ValueOf` types to get/set values and append diags if the conversion fails. (`DiagsGet`, `DiagsSet`)
+```

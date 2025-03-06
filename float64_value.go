@@ -65,6 +65,16 @@ func NewFloat64PointerValue(s *float64) Float64Value {
 	}
 }
 
+func NewFloat64PointerValueOrNull(s *float64) Float64Value {
+	if s == nil {
+		return NewFloat64Null()
+	}
+
+	return Float64Value{
+		Float64Value: basetypes.NewFloat64PointerValue(s),
+	}
+}
+
 // * CustomFunc
 
 // Get returns the known Float64 value. If Float64 is null or unknown, returns 0.0.

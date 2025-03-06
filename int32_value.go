@@ -65,6 +65,16 @@ func NewInt32PointerValue(s *int32) Int32Value {
 	}
 }
 
+func NewInt32PointerValueOrNull(s *int32) Int32Value {
+	if s == nil {
+		return NewInt32Null()
+	}
+
+	return Int32Value{
+		Int32Value: basetypes.NewInt32PointerValue(s),
+	}
+}
+
 // * CustomFunc
 
 // Get returns the known Int32 value.

@@ -100,17 +100,59 @@ func (v SetNestedValue) IsKnown() bool {
 	return !v.SetValue.IsNull() && !v.SetValue.IsUnknown()
 }
 
+// * SetNestedObjectValueOf[T]
+
 // Get returns a slice of pointers to the elements of a SetNestedObject.
 func (v SetNestedObjectValueOf[T]) Get(ctx context.Context) ([]*T, diag.Diagnostics) {
 	return nestedObjectValueSlice[T](ctx, v.SetValue)
 }
 
+// MustGet returns a slice of pointers to the elements of a SetNestedObject.
+// panics if the set conversion fails.
+func (v SetNestedObjectValueOf[T]) MustGet(ctx context.Context) []*T {
+	return MustDiag(nestedObjectValueSlice[T](ctx, v.SetValue))
+}
+
+// DiagsGet returns a slice of pointers to the elements of a SetNestedObject.
+// diags is appended if the set conversion fails.
+func (v SetNestedObjectValueOf[T]) DiagsGet(ctx context.Context, diags diag.Diagnostics) []*T {
+	vv, d := nestedObjectValueSlice[T](ctx, v.SetValue)
+	diags.Append(d...)
+	return vv
+}
+
 // Set returns a SetNestedObjectValueOf from a slice of pointers to the elements of a SetNestedObject.
-func (v *SetNestedObjectValueOf[T]) Set(ctx context.Context, slice []*T) diag.Diagnostics {
+func (v *SetNestedObjectValueOf[T]) Set(ctx context.Context, m []*T) diag.Diagnostics {
 	var diags diag.Diagnostics
-	v.SetValue, diags = basetypes.NewSetValueFrom(ctx, NewObjectTypeOf[T](ctx), slice)
+	v.SetValue, diags = basetypes.NewSetValueFrom(ctx, NewObjectTypeOf[T](ctx), m)
 	return diags
 }
+
+// MustSet returns a SetNestedObjectValueOf from a slice of pointers to the elements of a SetNestedObject.
+// panics if the set conversion fails.
+func (v *SetNestedObjectValueOf[T]) MustSet(ctx context.Context, m []*T) {
+	MustDiags(v.Set(ctx, m))
+}
+
+// DiagsSet returns a SetNestedObjectValueOf from a slice of pointers to the elements of a SetNestedObject.
+// diags is appended if the set conversion fails.
+func (v *SetNestedObjectValueOf[T]) DiagsSet(ctx context.Context, diags diag.Diagnostics, m []*T) {
+	diags.Append(v.Set(ctx, m)...)
+}
+
+// IsKnown returns whether the value is known.
+func (v SetNestedObjectValueOf[T]) IsKnown() bool {
+	return !v.SetValue.IsNull() && !v.SetValue.IsUnknown()
+}
+
+func (v *SetNestedObjectValueOf[T]) SetNull(ctx context.Context) {
+	*v = NewSetNestedObjectValueOfNull[T](ctx)
+}
+
+func (v *SetNestedObjectValueOf[T]) SetUnknown(ctx context.Context) {
+	*v = NewSetNestedObjectValueOfUnknown[T](ctx)
+}
+
 func NewSetNestedObjectValueOfNull[T any](ctx context.Context) SetNestedObjectValueOf[T] {
 	return SetNestedObjectValueOf[T]{SetValue: basetypes.NewSetNull(NewObjectTypeOf[T](ctx))}
 }
@@ -130,21 +172,4 @@ func NewSetNestedObjectValueOfValueSlice[T any](ctx context.Context, ts []T) Set
 }
 func newSetNestedObjectValueOf[T any](ctx context.Context, elements any) SetNestedObjectValueOf[T] {
 	return SetNestedObjectValueOf[T]{SetValue: MustDiag(basetypes.NewSetValueFrom(ctx, NewObjectTypeOf[T](ctx), elements))}
-}
-
-// IsKnown returns whether the value is known.
-func (v SetNestedObjectValueOf[T]) IsKnown() bool {
-	if !v.IsNull() && !v.IsUnknown() {
-		return true
-	}
-
-	return false
-}
-
-func (v *SetNestedObjectValueOf[T]) SetNull(ctx context.Context) {
-	*v = NewSetNestedObjectValueOfNull[T](ctx)
-}
-
-func (v *SetNestedObjectValueOf[T]) SetUnknown(ctx context.Context) {
-	*v = NewSetNestedObjectValueOfUnknown[T](ctx)
 }

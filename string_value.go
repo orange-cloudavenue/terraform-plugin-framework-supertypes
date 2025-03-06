@@ -59,7 +59,27 @@ func NewStringValue(s string) StringValue {
 	}
 }
 
+func NewStringValueOrNull(s string) StringValue {
+	if s == "" {
+		return NewStringNull()
+	}
+
+	return StringValue{
+		StringValue: basetypes.NewStringValue(s),
+	}
+}
+
 func NewStringPointerValue(s *string) StringValue {
+	return StringValue{
+		StringValue: basetypes.NewStringPointerValue(s),
+	}
+}
+
+func NewStringPointerValueOrNull(s *string) StringValue {
+	if s == nil {
+		return NewStringNull()
+	}
+
 	return StringValue{
 		StringValue: basetypes.NewStringPointerValue(s),
 	}

@@ -65,6 +65,16 @@ func NewBoolPointerValue(s *bool) BoolValue {
 	}
 }
 
+func NewBoolPointerValueOrNull(s *bool) BoolValue {
+	if s == nil {
+		return NewBoolNull()
+	}
+
+	return BoolValue{
+		BoolValue: basetypes.NewBoolPointerValue(s),
+	}
+}
+
 // * CustomFunc
 
 // Get returns the known Bool value. If Bool is null or unknown, returns false.
