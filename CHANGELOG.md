@@ -1,5 +1,9 @@
 ## 0.6.0 (Unreleased)
 
+### :rocket: **New Features**
+
+* `int32` - Support new `int32` type with some custom functions. (GetInt/8/16/32/64, GetInt/8/16/32/64Ptr, SetInt/8/16/32/64, SetInt/8/16/32/64Ptr) (GH-32)
+
 ### :dependabot: **Dependencies**
 
 * deps: bumps github.com/fatih/color from 1.17.0 to 1.18.0 (GH-10)
