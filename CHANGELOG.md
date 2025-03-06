@@ -1,4 +1,5 @@
-## 0.6.0 (Unreleased)
+## 1.1.0 (Unreleased)
+## 1.0.0 (March  6, 2025)
 
 ### :rocket: **New Features**
 
