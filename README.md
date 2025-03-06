@@ -39,7 +39,7 @@ Custom types available in the supertypes:
 * `ListNestedObjectValueOf` - A custom type that is used to define the nested object value of the list type. This type use golang generics to construct automatically the nested object.
 * `SetNestedObjectValueOf` - A custom type that is used to define the nested object value of the set type. This type use golang generics to construct automatically the nested object.
 
-Principal functions available for each custom type:
+Principal methods available for each custom type:
 
 * `Get()` - A function that is used to get the value.
 * `Set()` - A function that is used to set the value.
@@ -47,7 +47,7 @@ Principal functions available for each custom type:
 * `SetUnknown()` - A function that is used to set the value to unknown.
 * `IsKnown()` - A function that is used to check if the value is known.
 
-Special functions available for the `Float64Type`:
+Special methods available for the `Float64Type`:
 
 * `SetFloat32()` - A function that is used to set the `float32` value into the `float64`.
 * `SetFloat64()` - A function that is used to set the `float64` value into the `float64`.
@@ -58,7 +58,7 @@ Special functions available for the `Float64Type`:
 * `GetFloat32Ptr()` - A function that is used to get the value as a `float32` pointer.
 * `GetFloat64Ptr()` - A function that is used to get the value as a `float64` pointer.
 
-Special functions available for the `Int32Type` and `Int64Type`:
+Special methods available for the `Int32Type` and `Int64Type`:
 
 * `SetInt()` - A function that is used to set `int` into the type (`int32` or `int64`).
 * `SetInt8()` - A function that is used to set `int8` into the type (`int32` or `int64`).
@@ -80,6 +80,13 @@ Special functions available for the `Int32Type` and `Int64Type`:
 * `GetInt16Ptr()` - A function that is used to get the value as an `int16` pointer.
 * `GetInt32Ptr()` - A function that is used to get the value as an `int32` pointer.
 * `GetInt64Ptr()` - A function that is used to get the value as an `int64` pointer.
+
+Special methods available for the all `*ValueOf` types:
+
+* `MustGet(context.Context)` - A function that is used to get the value. If the value get return an error, the function panic.
+* `DiagsGet(context.Context, diag.Diagnostics)` - A function that is used to get the value. If the value get return an error, the function add the error to the diagnostics.
+* `MustSet(context.Context, T)` - A function that is used to set the value. If the value set return an error, the function panic.
+* `DiagsSet(context.Context, diag.Diagnostics, T)` - A function that is used to set the value. If the value set return an error, the function add the error to the diagnostics.
 
 ## Installation
 

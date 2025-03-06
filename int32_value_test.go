@@ -432,7 +432,7 @@ func TestInt32Value(t *testing.T) {
 	assert.False(t, v.IsNull())
 	assert.False(t, v.IsUnknown())
 	assert.True(t, v.IsKnown())
-	assert.Equal(t, int64(64), v.Get())
+	assert.Equal(t, int32(64), v.Get())
 
 	// Test SetIntPtr
 	iInt := int(128)

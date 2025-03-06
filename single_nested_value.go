@@ -122,9 +122,32 @@ func (v SingleNestedObjectValueOf[T]) Get(ctx context.Context) (*T, diag.Diagnos
 	return ptr, diags
 }
 
+// MustGet returns the value as a pointer to the structure T, panicking on error.
+func (v SingleNestedObjectValueOf[T]) MustGet(ctx context.Context) *T {
+	return MustDiag(v.Get(ctx))
+}
+
+// DiagsGet returns the value as a pointer to the structure T, errors are appended to diags.
+func (v SingleNestedObjectValueOf[T]) DiagsGet(ctx context.Context, diags diag.Diagnostics) *T {
+	vv, d := v.Get(ctx)
+	diags.Append(d...)
+	return vv
+}
+
+// Set sets the value as a pointer to the structure T.
 func (v *SingleNestedObjectValueOf[T]) Set(ctx context.Context, t *T) (diags diag.Diagnostics) {
 	v.ObjectValue, diags = basetypes.NewObjectValueFrom(ctx, AttributeTypesMust[T](ctx), t)
 	return diags
+}
+
+// MustSet sets the value from a pointer to the structure T, panicking on error.
+func (v *SingleNestedObjectValueOf[T]) MustSet(ctx context.Context, t *T) {
+	MustDiags(v.Set(ctx, t))
+}
+
+// DiagsSet sets the value from a pointer to the structure T, errors are appended to diags.
+func (v *SingleNestedObjectValueOf[T]) DiagsSet(ctx context.Context, diags diag.Diagnostics, t *T) {
+	diags.Append(v.Set(ctx, t)...)
 }
 
 // IsKnown returns whether the value is known.

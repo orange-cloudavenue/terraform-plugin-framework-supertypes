@@ -100,6 +100,7 @@ func New{{ .TypeName }}ValueOf[T any](ctx context.Context, t *T) {{ .TypeName }}
 	return {{ .TypeName }}ValueOf[T]{ {{ .TypeName }}Value: MustDiag(basetypes.New{{ .TypeName }}ValueFrom(ctx, AttributeTypesMust[T](ctx), t))}
 }
 
+// Get returns the value as a pointer to the structure T.
 func (v {{ .TypeName }}ValueOf[T]) Get(ctx context.Context) (*T, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
@@ -113,18 +114,37 @@ func (v {{ .TypeName }}ValueOf[T]) Get(ctx context.Context) (*T, diag.Diagnostic
 	return ptr, diags
 }
 
+// MustGet returns the value as a pointer to the structure T, panicking on error.
+func (v {{ .TypeName }}ValueOf[T]) MustGet(ctx context.Context) *T {
+	return MustDiag(v.Get(ctx))
+}
+
+// DiagsGet returns the value as a pointer to the structure T, errors are appended to diags.
+func (v {{ .TypeName }}ValueOf[T]) DiagsGet(ctx context.Context, diags diag.Diagnostics) (*T) {
+	vv, d := v.Get(ctx)
+	diags.Append(d...)
+	return vv
+}
+
+// Set sets the value from a pointer to the structure T.
 func (v *{{ .TypeName }}ValueOf[T]) Set(ctx context.Context, t *T) (diags diag.Diagnostics) {
 	v.{{ .TypeName }}Value, diags = basetypes.New{{ .TypeName }}ValueFrom(ctx, AttributeTypesMust[T](ctx), t)
 	return diags
 }
 
+// MustSet sets the value from a pointer to the structure T, panicking on error.
+func (v *{{ .TypeName }}ValueOf[T]) MustSet(ctx context.Context, t *T) {
+	MustDiags(v.Set(ctx, t))
+}
+
+// DiagsSet sets the value from a pointer to the structure T, errors are appended to diags.
+func (v *{{ .TypeName }}ValueOf[T]) DiagsSet(ctx context.Context, diags diag.Diagnostics, t *T)  {
+	 diags.Append(v.Set(ctx, t)...)
+}
+
 // IsKnown returns whether the value is known.
 func (v {{ .TypeName }}ValueOf[T]) IsKnown() bool {
-	if !v.IsNull() && !v.IsUnknown() {
-		return true
-	}
-
-	return false
+	return !v.IsNull() && !v.IsUnknown() 
 }
 
 func (v *{{ .TypeName }}ValueOf[T]) SetNull(ctx context.Context) {

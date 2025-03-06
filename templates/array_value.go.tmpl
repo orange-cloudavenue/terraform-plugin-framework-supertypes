@@ -136,6 +136,30 @@ func (v {{ .TypeName }}ValueOf[T]) Get(ctx context.Context) (values {{ if eq .Ty
 	return
 }
 
+// MustGet returns a {{ .TypeName }}ValueOf from the given value.
+// It panics if set conversion fails.
+func (v {{ .TypeName }}ValueOf[T]) MustGet(ctx context.Context) {{ if eq .TypeName "Map"}}map[string]T{{else}}[]T{{end}} {
+	return MustDiag(v.Get(ctx))
+}
+
+// DiagsGet returns a {{ .TypeName }}ValueOf from the given value.
+// It appends diags if set conversion fails.
+func (v {{ .TypeName }}ValueOf[T]) DiagsGet(ctx context.Context, diags diag.Diagnostics) (values {{ if eq .TypeName "Map"}}map[string]T{{else}}[]T{{end}}) {
+	vv, d := v.Get(ctx)
+	diags.Append(d...)
+	return vv
+}
+
+// MustSet sets the value of this value.
+func (v *{{ .TypeName }}ValueOf[T]) MustSet(ctx context.Context, elements {{ if eq .TypeName "Map"}}map[string]T{{else}}[]T{{end}}) {
+	MustDiags(v.Set(ctx, elements))
+}
+
+// DiagsSet sets the value of this value.
+func (v *{{ .TypeName }}ValueOf[T]) DiagsSet(ctx context.Context, diags diag.Diagnostics, elements {{ if eq .TypeName "Map"}}map[string]T{{else}}[]T{{end}}) {
+	diags.Append(v.Set(ctx, elements)...)
+}
+
 // Set sets the value of this value.
 func (v *{{ .TypeName }}ValueOf[T]) Set(ctx context.Context, elements {{ if eq .TypeName "Map"}}map[string]T{{else}}[]T{{end}}) diag.Diagnostics {
 	var d diag.Diagnostics

@@ -51,12 +51,35 @@ func New{{ .TypeName }}Value(s {{ golangType .TypeName }}) {{ .TypeName }}Value 
 	}
 }
 
+{{ if eq .TypeName "String" }}
+func New{{ .TypeName }}ValueOrNull(s {{ golangType .TypeName }}) {{ .TypeName }}Value {
+	if s == "" {
+		return New{{ .TypeName }}Null()
+	}
+
+	return {{ .TypeName }}Value{
+		{{ .TypeName }}Value: basetypes.New{{ .TypeName }}Value(s),
+	}
+}
+{{ end }}
+
 {{ if ne .TypeName "Number" }}
 func New{{ .TypeName }}PointerValue(s *{{ golangType .TypeName }}) {{ .TypeName }}Value {
 	return {{ .TypeName }}Value{
 		{{ .TypeName }}Value: basetypes.New{{ .TypeName }}PointerValue(s),
 	}
 }
+
+func New{{ .TypeName }}PointerValueOrNull(s *{{ golangType .TypeName }}) {{ .TypeName }}Value {
+	if s == nil {
+		return New{{ .TypeName }}Null()
+	}
+
+	return {{ .TypeName }}Value{
+		{{ .TypeName }}Value: basetypes.New{{ .TypeName }}PointerValue(s),
+	}
+}
+
 {{ end }}
 
 // * CustomFunc

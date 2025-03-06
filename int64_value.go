@@ -65,6 +65,16 @@ func NewInt64PointerValue(s *int64) Int64Value {
 	}
 }
 
+func NewInt64PointerValueOrNull(s *int64) Int64Value {
+	if s == nil {
+		return NewInt64Null()
+	}
+
+	return Int64Value{
+		Int64Value: basetypes.NewInt64PointerValue(s),
+	}
+}
+
 // * CustomFunc
 
 // Get returns the known Int64 value. If Int64 is null or unknown, returns 0.

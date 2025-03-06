@@ -143,6 +143,30 @@ func (v MapValueOf[T]) Get(ctx context.Context) (values map[string]T, diags diag
 	return
 }
 
+// MustGet returns a MapValueOf from the given value.
+// It panics if set conversion fails.
+func (v MapValueOf[T]) MustGet(ctx context.Context) map[string]T {
+	return MustDiag(v.Get(ctx))
+}
+
+// DiagsGet returns a MapValueOf from the given value.
+// It appends diags if set conversion fails.
+func (v MapValueOf[T]) DiagsGet(ctx context.Context, diags diag.Diagnostics) (values map[string]T) {
+	vv, d := v.Get(ctx)
+	diags.Append(d...)
+	return vv
+}
+
+// MustSet sets the value of this value.
+func (v *MapValueOf[T]) MustSet(ctx context.Context, elements map[string]T) {
+	MustDiags(v.Set(ctx, elements))
+}
+
+// DiagsSet sets the value of this value.
+func (v *MapValueOf[T]) DiagsSet(ctx context.Context, diags diag.Diagnostics, elements map[string]T) {
+	diags.Append(v.Set(ctx, elements)...)
+}
+
 // Set sets the value of this value.
 func (v *MapValueOf[T]) Set(ctx context.Context, elements map[string]T) diag.Diagnostics {
 	var d diag.Diagnostics
