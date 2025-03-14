@@ -1,0 +1,3 @@
+```release-note:feature
+`float32` - Add new `float32` type for 32-bit floating-point numbers.
+```

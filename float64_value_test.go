@@ -391,6 +391,36 @@ func TestNewFloat64PointerValue(t *testing.T) {
 	}
 }
 
+func TestNewFloat64PointerValueOrNull(t *testing.T) {
+	t.Parallel()
+
+	testCases := map[string]struct {
+		value    *float64
+		expected Float64Value
+	}{
+		"nil": {
+			value:    nil,
+			expected: NewFloat64Null(),
+		},
+		"value": {
+			value:    pointer(1.2),
+			expected: NewFloat64Value(1.2),
+		},
+	}
+
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
+			got := NewFloat64PointerValueOrNull(testCase.value)
+
+			if diff := cmp.Diff(got, testCase.expected); diff != "" {
+				t.Errorf("unexpected difference: %s", diff)
+			}
+		})
+	}
+}
+
 func TestFloat64Value(t *testing.T) {
 	t.Run("Get", func(t *testing.T) {
 		v := NewFloat64Value(1.23)
@@ -420,65 +450,6 @@ func TestFloat64Value(t *testing.T) {
 		assert.True(t, v.IsNull())
 	})
 
-	t.Run("SetFloat32", func(t *testing.T) {
-		v := NewFloat64Value(1.23)
-		v.SetFloat32(4.56)
-		assert.Equal(t, float32(4.56), v.GetFloat32())
-	})
-
-	t.Run("SetFloat64", func(t *testing.T) {
-		v := NewFloat64Value(1.23)
-		v.SetFloat64(4.56)
-		assert.Equal(t, 4.56, v.Get())
-	})
-
-	t.Run("SetFloat32Ptr", func(t *testing.T) {
-		v := NewFloat64Value(1.23)
-		p := float32(4.56)
-		v.SetFloat32Ptr(&p)
-		assert.Equal(t, float32(4.56), v.GetFloat32())
-
-		v.SetFloat32Ptr(nil)
-		assert.True(t, v.IsNull())
-
-		x := v.GetFloat32Ptr()
-		assert.Nil(t, x)
-	})
-
-	t.Run("SetFloat64Ptr", func(t *testing.T) {
-		v := NewFloat64Value(1.23)
-		p := float64(4.56)
-		v.SetFloat64Ptr(&p)
-		assert.Equal(t, 4.56, v.Get())
-
-		v.SetFloat64Ptr(nil)
-		assert.True(t, v.IsNull())
-	})
-
-	t.Run("GetFloat32", func(t *testing.T) {
-		v := NewFloat64Value(1.23)
-		assert.Equal(t, float32(1.23), v.GetFloat32())
-	})
-
-	t.Run("GetFloat64", func(t *testing.T) {
-		v := NewFloat64Value(1.23)
-		assert.Equal(t, 1.23, v.GetFloat64())
-	})
-
-	t.Run("GetFloat32Ptr", func(t *testing.T) {
-		v := NewFloat64Value(1.23)
-		p := v.GetFloat32Ptr()
-		assert.NotNil(t, p)
-		assert.Equal(t, float32(1.23), *p)
-	})
-
-	t.Run("GetFloat64Ptr", func(t *testing.T) {
-		v := NewFloat64Value(1.23)
-		p := v.GetFloat64Ptr()
-		assert.NotNil(t, p)
-		assert.Equal(t, 1.23, *p)
-	})
-
 	t.Run("SetNull", func(t *testing.T) {
 		v := NewFloat64Value(1.23)
 		v.SetNull()
@@ -498,5 +469,16 @@ func TestFloat64Value(t *testing.T) {
 		assert.False(t, v.IsKnown())
 		v.SetUnknown()
 		assert.False(t, v.IsKnown())
+	})
+
+	t.Run("NotEqual", func(t *testing.T) {
+		v := NewFloat64Value(1.23)
+		v2 := NewInt32Value(1)
+		assert.False(t, v.Equal(v2))
+	})
+
+	t.Run("Type", func(t *testing.T) {
+		v := NewFloat64Value(1.23)
+		assert.IsType(t, Float64Type{}, v.Type(context.Background()))
 	})
 }
