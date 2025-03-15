@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+includes: 
+  internal: internal.yml
+
+tasks:
+  # * Init
+  init:
+    desc: Initialize the yaml
+    silent: true
+    cmds:
+      - defer: echo "✅ YAML are initialized"
+
+  # * Install
+  install:
+    desc: Install required tools
+    cmds:
+      - for: [
+          yamllint,
+        ]
+        task: internal:tools:brew
+        vars:
+          APP: '{{.ITEM}}'

@@ -1,0 +1,115 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  IS_MODULE:
+    # The pattern of terraform module name is terraform-cloudavenue-<nameofmodule>.
+    # Detect if it's a module with the presence of the terraform-cloudavenue- keyword in the last part of the path
+    sh: |
+      if [[ $IS_MODULE == "" ]]; then
+        awk -F/ '{print $NF}' <<< $(pwd) | grep -q "terraform-cloudavenue-" && echo "true" || echo "false"
+      else
+        echo $IS_MODULE
+      fi
+
+includes: 
+  internal: internal.yml
+
+tasks:
+  # * Init
+  init:
+    desc: Initialize the terraform
+    silent: true
+    internal: true
+    cmds:
+      - defer: "echo ✅ Terraform are initialized"
+      - cmd: terraform init
+      - cmd: tflint --init
+
+  # * Install
+  install:
+    desc: Install required tools
+    cmds:
+      - for: [
+          hashicorp/tap,
+        ]
+        task: internal:tools:brew:tap
+        vars:
+          APP: '{{.ITEM}}'
+      - for: [
+          hashicorp/tap/terraform,
+          tflint,
+        ]
+        task: internal:tools:brew
+        vars:
+          APP: '{{.ITEM}}'
+      - task: install:module
+  
+  install:module:
+    desc: Install terraform module
+    internal: true
+    cmds:
+      - for: [
+          terraform-docs,
+        ]
+        task: internal:tools:brew:optional
+        vars:
+          APP: '{{.ITEM}}'
+          INSTALL_REQUIRED: '{{.IS_MODULE}}'
+  
+  # * Lint 
+  lint:
+    desc: Run terraform linters
+    cmds:
+      - for: [
+          tf:fmt,
+          tf:validate,
+          tflint,
+        ]
+        task: lint:{{.ITEM}}
+
+  # * Lint with terraform client
+  lint:tf:fmt:
+    desc: Run terraform fmt
+    internal: true
+    preconditions:
+      - sh: command -v terraform
+        msg: "terraform is not installed. Please run `task install`"
+    cmds:
+      - terraform fmt
+
+  lint:tf:fmt-specific-dir:
+    desc: Run terraform fmt on a specific directory
+    internal: true
+    preconditions:
+      - sh: command -v terraform
+        msg: "terraform is not installed. Please run `task install`"
+    cmds:
+      - find {{.DIRECTORY}} -name "*.tf" -exec terraform fmt {} \;
+
+  lint:tf:validate:
+    desc: Run terraform validate
+    internal: true
+    preconditions:
+      - sh: command -v terraform
+        msg: "terraform is not installed. Please run `task install`"
+    cmds:
+      - terraform validate
+
+  # * Lint with tflint
+  lint:tflint:
+    desc: Run tflint
+    internal: true
+    preconditions:
+      - sh: command -v tflint
+        msg: "tflint is not installed. Please run `task install`"
+      - sh: test -f .tflint.hcl
+        msg: "No .tflint.hcl file found."
+    cmds:
+      - tflint
+
+  # * Actions
+  actions:docs:
+    desc: Generate terraform docs
+    cmds:
+      - terraform-docs markdown . > README.md

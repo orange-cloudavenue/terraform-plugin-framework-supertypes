@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+includes: 
+  internal: internal.yml
+
+tasks:
+  # * Linters
+  lint:
+    desc: Run license linters
+    cmds:
+      - for: [
+          license-header,
+        ]
+        task: lint:{{.ITEM}}
+
+  lint:license-header:
+    desc: Run license header
+    internal: true
+    preconditions:
+      - sh: command -v license-eye
+        msg: "license-eye is not installed. Please run `task license:install`"
+      - sh: test -f .licenserc.yaml
+        msg: "No .licenserc.yaml file found.`"
+    cmds:
+      - license-eye header check
+
+  # * Init
+  init:
+    desc: Initialize the license
+    silent: true
+    internal: true
+    cmds:
+      - defer: echo "✅ License are initialized"
+
+  # * Install
+  install:
+    desc: Install required tools
+    cmds:
+      - for: [
+          license-eye,
+        ]
+        task: internal:tools:brew
+        vars:
+          APP: '{{.ITEM}}'
+
+  # * Actions 
+  run: 
+    desc: Run license actions
+    cmds:
+      - for: [
+          license-header-fix,
+        ]
+        task: actions:{{.ITEM}}
+
+  # ? Generate
+  actions:license-header-fix:
+    desc: Run license header
+    internal: true
+    preconditions:
+      - sh: command -v license-eye
+        msg: "license-eye is not installed. Please run `task license:install`"
+      - sh: test -f .licenserc.yaml
+        msg: "No .licenserc.yaml file found.`"
+    cmds:
+      - license-eye header fix
