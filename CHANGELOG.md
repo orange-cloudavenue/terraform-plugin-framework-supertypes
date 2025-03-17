@@ -1,4 +1,9 @@
 ## 1.1.0 (Unreleased)
+
+### :rocket: **New Features**
+
+* `float32` - Add new `float32` type for 32-bit floating-point numbers. (GH-37)
+
 ## 1.0.0 (March  6, 2025)
 
 ### :rocket: **New Features**
