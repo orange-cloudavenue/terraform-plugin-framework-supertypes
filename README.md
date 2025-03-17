@@ -23,40 +23,40 @@ The supertypes are custom types that are used to extend the functionality of the
 
 Custom types available in the supertypes:
 
-* `StringType` - A custom type that is used to define the string type.
-* `Int32Type` - A custom type that is used to define the integer type.
-* `Int64Type` - A custom type that is used to define the integer type.
-* `NumberType` - A custom type that is used to define the number type.
-* `BoolType` - A custom type that is used to define the boolean type.
-* `Float64Type` - A custom type that is used to define the float type.
-* `MapType` - A custom type that is used to define the map type.
-* `ListType` - A custom type that is used to define the list type.
-* `SetType` - A custom type that is used to define the set type.
-* `MapNestedType` - A custom type that is used to define the nested map type.
-* `ListNestedType` - A custom type that is used to define the nested list type.
-* `SetNestedType` - A custom type that is used to define the nested set type.
-* `MapNestedObjectValueOf` - A custom type that is used to define the nested object value of the map type. This type use golang generics to construct automatically the nested object.
-* `ListNestedObjectValueOf` - A custom type that is used to define the nested object value of the list type. This type use golang generics to construct automatically the nested object.
-* `SetNestedObjectValueOf` - A custom type that is used to define the nested object value of the set type. This type use golang generics to construct automatically the nested object.
+* **Simple types**
+  * `StringType` - A custom type that is used to define the string type.
+  * `Int32Type` - A custom type that is used to define the integer type.
+  * `Int64Type` - A custom type that is used to define the integer type.
+  * `NumberType` - A custom type that is used to define the number type.
+  * `BoolType` - A custom type that is used to define the boolean type.
+  * `Float32Type` - A custom type that is used to define the float type.
+  * `Float64Type` - A custom type that is used to define the float type.
+* **Array types**
+  * `MapType` - A custom type that is used to define the map type.
+  * `ListType` - A custom type that is used to define the list type.
+  * `SetType` - A custom type that is used to define the set type.
+  * `MapTypeOf` - A custom type that is used to define the map type. This type use golang generics to construct automatically the map.
+  * `ListTypeOf` - A custom type that is used to define the list type. This type use golang generics to construct automatically the list.
+  * `SetTypeOf` - A custom type that is used to define the set type. This type use golang generics to construct automatically the set.
+* **Object types**
+  * `SingleNestedObjectTypeOf` - A custom type that is used to define the nested object value of the single type. This type use golang generics to construct automatically the nested object.
+* **Object array types**
+  * `MapNestedType` - A custom type that is used to define the nested map type.
+  * `ListNestedType` - A custom type that is used to define the nested list type.
+  * `SetNestedType` - A custom type that is used to define the nested set type.
+  * `MapNestedObjectTypeOf` - A custom type that is used to define the nested object value of the map type. This type use golang generics to construct automatically the nested object.
+  * `ListNestedObjectTypeOf` - A custom type that is used to define the nested object value of the list type. This type use golang generics to construct automatically the nested object.
+  * `SetNestedObjectTypeOf` - A custom type that is used to define the nested object value of the set type. This type use golang generics to construct automatically the nested object.
 
 Principal methods available for each custom type:
 
 * `Get()` - A function that is used to get the value.
+* `GetPtr()` - A function that is used to get the value as a pointer.
 * `Set()` - A function that is used to set the value.
+* `SetPtr()` - A function that is used to set the value as a pointer.
 * `SetNull()` - A function that is used to set the value to null.
 * `SetUnknown()` - A function that is used to set the value to unknown.
 * `IsKnown()` - A function that is used to check if the value is known.
-
-Special methods available for the `Float64Type`:
-
-* `SetFloat32()` - A function that is used to set the `float32` value into the `float64`.
-* `SetFloat64()` - A function that is used to set the `float64` value into the `float64`.
-* `SetFloat32Ptr()` - A function that is used to set the `float32` pointer value into the `float64`.
-* `SetFloat64Ptr()` - A function that is used to set the `float64` pointer value into the `float64`.
-* `GetFloat32()` - A function that is used to get the value as a `float32`.
-* `GetFloat64()` - A function that is used to get the value as a `float64`.
-* `GetFloat32Ptr()` - A function that is used to get the value as a `float32` pointer.
-* `GetFloat64Ptr()` - A function that is used to get the value as a `float64` pointer.
 
 Special methods available for the `Int32Type` and `Int64Type`:
 
@@ -81,7 +81,7 @@ Special methods available for the `Int32Type` and `Int64Type`:
 * `GetInt32Ptr()` - A function that is used to get the value as an `int32` pointer.
 * `GetInt64Ptr()` - A function that is used to get the value as an `int64` pointer.
 
-Special methods available for the all `*ValueOf` types:
+Special methods available for the all `*TypeOf` types:
 
 * `MustGet(context.Context)` - A function that is used to get the value. If the value get return an error, the function panic.
 * `DiagsGet(context.Context, diag.Diagnostics)` - A function that is used to get the value. If the value get return an error, the function add the error to the diagnostics.

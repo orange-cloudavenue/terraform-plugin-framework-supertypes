@@ -123,7 +123,7 @@ var (
 		},
 	}
 	terraformTypesMap = map[typeOfResource][]string{
-		simpleType:       {"string", "bool", "float64", "int32", "int64", "number"},
+		simpleType:       {"string", "bool", "float64", "float32", "int32", "int64", "number"},
 		arrayType:        {"list", "set", "map"},
 		nestedType:       {"list_nested", "set_nested", "map_nested"},
 		objectType:       {"object"},
@@ -199,6 +199,8 @@ var templateFuncs = template.FuncMap{
 			return "bool"
 		case "float64":
 			return "float64"
+		case "float32":
+			return "float32"
 		case "int":
 			return "int"
 		case "int8":
