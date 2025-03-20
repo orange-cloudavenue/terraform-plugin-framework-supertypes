@@ -29,7 +29,7 @@ func AttributeTypes[T any](ctx context.Context) (map[string]attr.Type, error) {
 	}
 
 	attributeTypes := make(map[string]attr.Type)
-	for i := 0; i < typ.NumField(); i++ {
+	for i := range typ.NumField() {
 		field := typ.Field(i)
 		if field.PkgPath != "" {
 			continue // Skip unexported fields.
