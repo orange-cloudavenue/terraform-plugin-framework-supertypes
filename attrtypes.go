@@ -66,8 +66,12 @@ func ElementType[T any](_ context.Context) (attr.Type, error) {
 		return StringType{}, nil
 	case reflect.Bool:
 		return BoolType{}, nil
+	case reflect.Int32:
+		return Int32Type{}, nil
 	case reflect.Int64:
 		return Int64Type{}, nil
+	case reflect.Float32:
+		return Float32Type{}, nil
 	case reflect.Float64:
 		return Float64Type{}, nil
 	default:
