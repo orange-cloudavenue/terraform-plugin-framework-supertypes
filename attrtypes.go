@@ -56,8 +56,13 @@ func AttributeTypesMust[T any](ctx context.Context) map[string]attr.Type {
 
 // ElementType returns the element type of the specified type T.
 // T must be a slice or map and reflection is used to find the element type.
-func ElementType[T any](_ context.Context) (attr.Type, error) {
+func ElementType[T any](ctx context.Context) (attr.Type, error) {
 	var t T
+
+	if v, ok := any(t).(attr.Value); ok {
+		return v.Type(ctx), nil
+	}
+
 	val := reflect.ValueOf(t)
 	typ := val.Type()
 
