@@ -65,8 +65,10 @@ func TestElementType(t *testing.T) {
 	t.Parallel()
 
 	type String string
+	type Int32 int32
 	type Int64 int64
 	type Bool bool
+	type Float32 float32
 	type Float64 float64
 	type Invalid int
 
@@ -77,6 +79,15 @@ func TestElementType(t *testing.T) {
 	}
 
 	if diff := cmp.Diff(got, supertypes.StringType{}); diff != "" {
+		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
+	}
+
+	got, err = supertypes.ElementType[Int32](ctx)
+	if err != nil {
+		t.Fatalf("unexpected error")
+	}
+
+	if diff := cmp.Diff(got, supertypes.Int32Type{}); diff != "" {
 		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
 	}
 
@@ -95,6 +106,15 @@ func TestElementType(t *testing.T) {
 	}
 
 	if diff := cmp.Diff(got, supertypes.BoolType{}); diff != "" {
+		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
+	}
+
+	got, err = supertypes.ElementType[Float32](ctx)
+	if err != nil {
+		t.Fatalf("unexpected error")
+	}
+
+	if diff := cmp.Diff(got, supertypes.Float32Type{}); diff != "" {
 		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
 	}
 
