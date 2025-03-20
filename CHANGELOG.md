@@ -1,4 +1,9 @@
 ## 1.2.0 (Unreleased)
+
+### :bug: **Bug Fixes**
+
+* Add missing `int32` and `float32` types in the ElementType (GH-39)
+
 ## 1.1.0 (March 17, 2025)
 
 ### :rocket: **New Features**
