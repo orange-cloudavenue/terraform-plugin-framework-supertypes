@@ -73,7 +73,35 @@ func TestElementType(t *testing.T) {
 	type Invalid int
 
 	ctx := context.Background()
-	got, err := supertypes.ElementType[String](ctx)
+
+	got, err := supertypes.ElementType[types.String](ctx)
+	if err != nil {
+		t.Fatalf("unexpected error")
+	}
+
+	if diff := cmp.Diff(got, types.StringType); diff != "" {
+		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
+	}
+
+	got, err = supertypes.ElementType[types.String](ctx)
+	if err != nil {
+		t.Fatalf("unexpected error")
+	}
+
+	if diff := cmp.Diff(got, types.StringType); diff != "" {
+		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
+	}
+
+	got, err = supertypes.ElementType[supertypes.StringValue](ctx)
+	if err != nil {
+		t.Fatalf("unexpected error")
+	}
+
+	if diff := cmp.Diff(got, supertypes.StringType{}); diff != "" {
+		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
+	}
+
+	got, err = supertypes.ElementType[String](ctx)
 	if err != nil {
 		t.Fatalf("unexpected error")
 	}
