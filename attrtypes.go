@@ -15,6 +15,7 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 // AttributeTypes returns a map of attribute types for the specified type T.
@@ -59,8 +60,31 @@ func AttributeTypesMust[T any](ctx context.Context) map[string]attr.Type {
 func ElementType[T any](ctx context.Context) (attr.Type, error) {
 	var t T
 
+	supportedTypes := []attr.Type{
+		basetypes.StringType{},
+		basetypes.BoolType{},
+		basetypes.Int32Type{},
+		basetypes.Int64Type{},
+		basetypes.Float32Type{},
+		basetypes.Float64Type{},
+	}
+
 	if v, ok := any(t).(attr.Value); ok {
-		return v.Type(ctx), nil
+		vType := v.Type(ctx)
+
+		vTypeReflect := reflect.TypeOf(vType)
+		for _, supportedType := range supportedTypes {
+			supportedTypeReflect := reflect.TypeOf(supportedType)
+
+			// Check if types match directly or if embedded type matches
+			if vTypeReflect == supportedTypeReflect ||
+				(vTypeReflect.Kind() == reflect.Struct && vTypeReflect.NumField() > 0 &&
+					vTypeReflect.Field(0).Type == supportedTypeReflect) {
+				return vType, nil
+			}
+		}
+
+		return nil, fmt.Errorf("%T has unsupported type: %s", t, vType.String())
 	}
 
 	val := reflect.ValueOf(t)
