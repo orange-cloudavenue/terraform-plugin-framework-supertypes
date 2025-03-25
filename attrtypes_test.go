@@ -18,6 +18,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
+	"github.com/hashicorp/terraform-plugin-framework-timetypes/timetypes"
 	supertypes "github.com/orange-cloudavenue/terraform-plugin-framework-supertypes"
 )
 
@@ -74,6 +75,7 @@ func TestElementType(t *testing.T) {
 
 	ctx := context.Background()
 
+	// TF framework type
 	got, err := supertypes.ElementType[types.String](ctx)
 	if err != nil {
 		t.Fatalf("unexpected error")
@@ -83,15 +85,17 @@ func TestElementType(t *testing.T) {
 		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
 	}
 
-	got, err = supertypes.ElementType[types.String](ctx)
+	// External custom type that uses basetypes.StringValue
+	got, err = supertypes.ElementType[timetypes.RFC3339](ctx)
 	if err != nil {
 		t.Fatalf("unexpected error")
 	}
 
-	if diff := cmp.Diff(got, types.StringType); diff != "" {
+	if diff := cmp.Diff(got, timetypes.RFC3339Type{}); diff != "" {
 		t.Errorf("unexpected diff (+wanted, -got): %s", diff)
 	}
 
+	// super type that uses basetypes.StringValue
 	got, err = supertypes.ElementType[supertypes.StringValue](ctx)
 	if err != nil {
 		t.Fatalf("unexpected error")
