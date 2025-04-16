@@ -1,4 +1,5 @@
-## 1.2.0 (Unreleased)
+## 1.3.0 (Unreleased)
+## 1.2.0 (April 16, 2025)
 ## 1.1.1 (March 20, 2025)
 
 ### :bug: **Bug Fixes**
