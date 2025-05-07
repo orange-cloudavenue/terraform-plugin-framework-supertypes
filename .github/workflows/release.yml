@@ -35,6 +35,7 @@ jobs:
     uses: orange-cloudavenue/workflows/.github/workflows/go_unit-test.yml@main
   tag:
     needs: [golang-ci-lint, tests]
+
     name: Tag
     uses: orange-cloudavenue/workflows/.github/workflows/tag_create-tag.yml@main
     with:
