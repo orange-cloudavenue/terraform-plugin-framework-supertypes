@@ -1,0 +1,3 @@
+```release-note:dependency
+deps: bumps github.com/hashicorp/terraform-plugin-framework, github.com/hashicorp/terraform-plugin-go, github.com/stretchr/testify from  to 
+```
