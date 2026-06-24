@@ -28,6 +28,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
 )
@@ -490,4 +491,51 @@ func TestFloat64Value(t *testing.T) {
 		v := NewFloat64Value(1.23)
 		assert.IsType(t, Float64Type{}, v.Type(context.Background()))
 	})
+}
+
+func TestFloat64ValueFloat64SemanticEquals(t *testing.T) {
+	t.Parallel()
+
+	testCases := map[string]struct {
+		currentFloat64 Float64Value
+		givenFloat64   Float64Value
+		expectedMatch  bool
+		expectedDiags  diag.Diagnostics
+	}{
+		"not equal - whole number": {
+			currentFloat64: NewFloat64Value(1),
+			givenFloat64:   NewFloat64Value(2),
+			expectedMatch:  false,
+		},
+		"not equal - float": {
+			currentFloat64: NewFloat64Value(1.1),
+			givenFloat64:   NewFloat64Value(1.2),
+			expectedMatch:  false,
+		},
+		"semantically equal - whole number": {
+			currentFloat64: NewFloat64Value(1),
+			givenFloat64:   NewFloat64Value(1),
+			expectedMatch:  true,
+		},
+		"semantically equal - float": {
+			currentFloat64: NewFloat64Value(1.1),
+			givenFloat64:   NewFloat64Value(1.1),
+			expectedMatch:  true,
+		},
+	}
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
+			match, diags := testCase.currentFloat64.Float64SemanticEquals(context.Background(), testCase.givenFloat64)
+
+			if testCase.expectedMatch != match {
+				t.Errorf("Expected Float64SemanticEquals to return: %t, but got: %t", testCase.expectedMatch, match)
+			}
+
+			if diff := cmp.Diff(diags, testCase.expectedDiags); diff != "" {
+				t.Errorf("Unexpected diagnostics (-got, +expected): %s", diff)
+			}
+		})
+	}
 }

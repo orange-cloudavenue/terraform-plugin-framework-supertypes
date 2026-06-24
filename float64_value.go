@@ -23,12 +23,16 @@ package supertypes
 
 import (
 	"context"
+	"fmt"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
 var _ basetypes.Float64Valuable = Float64Value{}
+var _ basetypes.Float64ValuableWithSemanticEquals = Float64Value{}
 
 type Float64Value struct {
 	basetypes.Float64Value
@@ -48,6 +52,25 @@ func (v Float64Value) Type(ctx context.Context) attr.Type {
 	return Float64Type{
 		Float64Type: v.Float64Value.Type(ctx).(basetypes.Float64Type),
 	}
+}
+
+func (f Float64Value) Float64SemanticEquals(ctx context.Context, newValuable basetypes.Float64Valuable) (bool, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	newValue, ok := newValuable.(Float64Value)
+	if ok {
+		return f.ValueFloat64() == newValue.ValueFloat64(), diags
+	}
+
+	diags.AddError(
+		"Semantic Equality Check Error",
+		"An unexpected value type was received while performing semantic equality checks. "+
+			"Please report this to the provider developers.\n\n"+
+			"Expected Value Type: "+fmt.Sprintf("%T", f)+"\n"+
+			"Got Value Type: "+fmt.Sprintf("%T", newValuable),
+	)
+
+	return false, diags
 }
 
 func NewFloat64Null() Float64Value {
