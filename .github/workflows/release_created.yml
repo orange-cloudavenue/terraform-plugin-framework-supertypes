@@ -14,9 +14,11 @@ permissions:
 
 jobs:
   go-report-card:
+    if: ${{ !github.event.release.prerelease }}
     name: "Go report card"
     uses: orange-cloudavenue/workflows/.github/workflows/go_report-card.yml@main
 
   go-proxy-refresh:
+    if: ${{ !github.event.release.prerelease }}
     name: "Go proxy refresh"
     uses: orange-cloudavenue/workflows/.github/workflows/go_proxy-refresh.yml@main
