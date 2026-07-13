@@ -22,8 +22,10 @@ jobs:
     uses: orange-cloudavenue/workflows/.github/workflows/tag_check-tag.yml@main
     with:
       tag: ${{ github.event.inputs.tag }}
+      ref: ${{ github.ref }}
+      repository: ${{ github.repository }}
     secrets:
-      TOKEN: ${{ secrets.CHANGELOG_PAT }}
+      TOKEN: ${{ secrets.RELEASE_CI_PAT }}
 
   golang-ci-lint:
     needs: [pre-check]
@@ -40,24 +42,27 @@ jobs:
     with:
       ref: ${{ github.ref }}
       repository: ${{ github.repository }}
+      send-coverage: true
   tag:
     needs: [golang-ci-lint, tests]
-
     name: Tag
     uses: orange-cloudavenue/workflows/.github/workflows/tag_create-tag.yml@main
     with:
       tag: ${{ github.event.inputs.tag }}
+      ref: ${{ github.ref }}
+      repository: ${{ github.repository }}
     secrets:
-      TOKEN: ${{ secrets.CHANGELOG_PAT }}
+      TOKEN: ${{ secrets.RELEASE_CI_PAT }}
 
   release-notes:
-    needs: [tag]
+    needs: [pre-check]
     name: Release Notes
     uses: orange-cloudavenue/workflows/.github/workflows/release_generate-release-note.yml@main
     with:
       tag: ${{ github.event.inputs.tag }}
+      repository: ${{ github.repository }}
     secrets:
-      TOKEN: ${{ secrets.CHANGELOG_PAT }}
+      TOKEN: ${{ secrets.RELEASE_CI_PAT }}
 
   make-release:
     needs: [release-notes]
@@ -65,8 +70,9 @@ jobs:
     with:
       tag: ${{ github.event.inputs.tag }}
       artifact-name: ${{ needs.release-notes.outputs.artifact-name }}
+      repository: ${{ github.repository }}
     secrets:
-      TOKEN: ${{ secrets.CHANGELOG_PAT }}
+      TOKEN: ${{ secrets.RELEASE_CI_PAT }}
 
   changelog-newversion:
     needs: [make-release]
@@ -74,9 +80,12 @@ jobs:
     with:
       tag: ${{ github.event.inputs.tag }}
     secrets:
-      TOKEN: ${{ secrets.CHANGELOG_PAT }}
-  
+      TOKEN: ${{ secrets.RELEASE_CI_PAT }}
+
   publish-doc:
     needs: [make-release]
     name: "Publish Documentation"
     uses: orange-cloudavenue/workflows/.github/workflows/doc_publish.yml@main
+    with:
+      ref: ${{ github.ref }}
+      repository: ${{ github.repository }}
