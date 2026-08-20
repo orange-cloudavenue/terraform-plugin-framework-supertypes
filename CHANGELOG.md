@@ -1,4 +1,9 @@
 ## 1.3.0 (Unreleased)
+
+### :dependabot: **Dependencies**
+
+* deps: bumps github.com/fatih/color, github.com/hashicorp/terraform-plugin-framework, github.com/hashicorp/terraform-plugin-go, github.com/stretchr/testify from 1.18.0 to 1.19.0 (GH-61)
+
 ## 1.2.0 (April 16, 2025)
 ## 1.1.1 (March 20, 2025)
 
