@@ -53,7 +53,6 @@ tasks:
         ]
         task: actions:{{.ITEM}}
 
-  # ? Generate
   actions:license-header-fix:
     desc: Run license header
     internal: true
