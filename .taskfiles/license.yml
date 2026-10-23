@@ -53,7 +53,6 @@ tasks:
         ]
         task: actions:{{.ITEM}}
 
-  # ? Generate
   actions:license-header-fix:
     desc: Run license header
     internal: true
@@ -64,3 +63,14 @@ tasks:
         msg: "No .licenserc.yaml file found.`"
     cmds:
       - license-eye header fix
+
+  # * Clean (dedup piled headers without adding new ones)
+  clean:
+    desc: Collapse piled/duplicated license headers into one canonical header
+    preconditions:
+      - sh: command -v node
+        msg: "node is required to run the license header cleaner"
+      - sh: test -f scripts/clean-license-headers.mjs
+        msg: "scripts/clean-license-headers.mjs not found (synced from orange-cloudavenue/workflows)"
+    cmds:
+      - node scripts/clean-license-headers.mjs
