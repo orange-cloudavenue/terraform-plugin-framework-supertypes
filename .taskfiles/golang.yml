@@ -27,7 +27,12 @@ tasks:
     desc: Run golangci-lint
     internal: true
     cmds:
-      - golangci-lint run --fix -j 8 ./...
+      - golangci-lint run -j 8 --allow-parallel-runners ./...
+
+  lint:fix:
+    desc: Run golangci-lint with autofix
+    cmds:
+      - golangci-lint run --fix -j 8 --allow-parallel-runners ./...
 
   lint:deps:verify:
     internal: true
